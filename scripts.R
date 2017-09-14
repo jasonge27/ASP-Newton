@@ -8,11 +8,22 @@ lognet_loss <- function(data, beta, intercept, lambda){
   return(compute_lognet_loss(data$X, c(data$Y), c(data$X%*%beta), c(beta), intercept, lambda))
 }
 
-generate_sim <- function(n, d, c) {
+generate_sim_lognet <- function(n, d, c, seed=111) {
+  set.seed(seed)
   X <- scale(matrix(rnorm(n*d), n, d)+ c*rnorm(n))
   s <- 20
   true_beta <- c(runif(s), rep(0, d-s)) 
   Y <- X%*%true_beta+rnorm(n)>.5
+  return(list(X=X, Y=c(Y)))
+}
+
+generate_sim<- function(n, d, c, seed=111) {
+  set.seed(seed)
+  X <- scale(matrix(rnorm(n*d), n, d)+ c*rnorm(n))
+  s <- 20
+  true_beta <- c(runif(s), rep(0, d-s)) 
+  Y <- X%*%true_beta+rnorm(n)*5
+  Y <- Y - mean(Y)
   return(list(X=X, Y=c(Y)))
 }
 
