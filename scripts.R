@@ -27,7 +27,7 @@ generate_sim_lognet <- function(n, d, c, seed=1024) {
   return(list(X=X, Y=c(Y), true_beta=true_beta))
 }
 
-generate_sim_elnet <- function(n, d, c, seed=1024) {
+generate_sim<- function(n, d, c, seed=1024) {
   set.seed(seed)
   cor.X <- c 
 
