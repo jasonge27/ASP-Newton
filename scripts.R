@@ -8,23 +8,40 @@ lognet_loss <- function(data, beta, intercept, lambda){
   return(compute_lognet_loss(data$X, c(data$Y), c(data$X%*%beta), c(beta), intercept, lambda))
 }
 
-generate_sim_lognet <- function(n, d, c, seed=111) {
+generate_sim_lognet <- function(n, d, c, seed=1024) {
   set.seed(seed)
-  X <- scale(matrix(rnorm(n*d), n, d)+ c*rnorm(n))
+  cor.X <- c 
+  S <- matrix(cor.X,d,d) + (1-cor.X)*diag(d)
+  R <- chol(S)
+
+  X <- scale(matrix(rnorm(n*d),n,d)%*%R)*sqrt(n-1)/sqrt(n)
+  attributes(X) <- NULL
+  X <- matrix(X, n,d)
+
   s <- 20
   true_beta <- c(runif(s), rep(0, d-s)) 
-  Y <- X%*%true_beta+rnorm(n)>.5
-  return(list(X=X, Y=c(Y)))
+
+  # strictly seperable
+  Y <- rbinom(n=n, size=1, p = 1/(1+exp(-X%*%true_beta)))
+
+  return(list(X=X, Y=c(Y), true_beta=true_beta))
 }
 
-generate_sim<- function(n, d, c, seed=111) {
+generate_sim_elnet <- function(n, d, c, seed=1024) {
   set.seed(seed)
-  X <- scale(matrix(rnorm(n*d), n, d)+ c*rnorm(n))
+  cor.X <- c 
+
+  S <- matrix(cor.X,d,d) + (1-cor.X)*diag(d)
+  R <- chol(S)
+
+  X <- scale(matrix(rnorm(n*d),n,d)%*%R)*sqrt(n-1)/sqrt(n)
+  attributes(X) <- NULL
+  X <- matrix(X, n,d)
+
   s <- 20
   true_beta <- c(runif(s), rep(0, d-s)) 
   Y <- X%*%true_beta+rnorm(n)*5
-  Y <- Y - mean(Y)
-  return(list(X=X, Y=c(Y)))
+  return(list(X=X, Y=c(Y), true_beta = true_beta))
 }
 
 pathfista <- function(data, lambdas, tol=1e-6, max_it=100){
