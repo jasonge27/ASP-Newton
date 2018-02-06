@@ -78,7 +78,7 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
 
 
   fitp<-picasso(data$X, data$Y,family="binomial", lambda.min.ratio=ratio,
-                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-6, nlambda=nlambda)
+                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-4, nlambda=nlambda)
 
   regpath <- fitp$lambda
   reg <- fitp$lambda[length(regpath)]
@@ -97,8 +97,10 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
     j <- reg_breakpoint[i]  # k lambdas
     loss[i] <- lognet_loss(data, fitp$beta[,j], fitp$intercept[j], reg)
   }
-  print(rtime)
-  print(loss)
+  cat(paste(rtime, collapse=","))
+  cat("\n")
+  cat(paste(loss, collapse=","))
+  cat("\n")
 
 
    if (!("glmnet" %in% skip)){
@@ -115,8 +117,11 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
       loss[i] <- lognet_loss(data, fit$beta[,j], fit$a0[j], reg)
 
     }
-    print(rtime)
-    print(loss)
+    cat(paste(rtime, collapse=","))
+    cat("\n")
+    cat(paste(loss, collapse=","))
+    cat("\n")
+
   }
 
 
@@ -136,8 +141,10 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
       j <- reg_breakpoint[i]
       loss[i] <- lognet_loss(data, fit$beta[,j], fit$b0[j], reg)
       }
-    print(rtime)
-    print(loss)
+    cat(paste(rtime, collapse=","))
+    cat("\n")
+    cat(paste(loss, collapse=","))
+    cat("\n")
   }
 
 
@@ -153,8 +160,10 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
       j <- reg_breakpoint[i]
       loss[i] <- lognet_loss(data, fit$beta[,j], fit$b0[j], reg)
     }
-    print(rtime)
-    print(loss)
+    cat(paste(rtime, collapse=","))
+    cat("\n")
+    cat(paste(loss, collapse=","))
+    cat("\n")
   }
 
 }
@@ -165,7 +174,7 @@ test_lognet <- function(data, nlambda = 100, ratio=0.01, fista_it = 20, trialN =
   picasso.KKTerr <- rep(0, trialN)
   for (i in 1:trialN){
      t <- system.time(fitp<-picasso(data$X, data$Y,family="binomial", lambda.min.ratio=ratio,
-                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-6, nlambda=nlambda))
+                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-4, nlambda=nlambda))
      picasso.rtime[i] <- t[1]
      err <- rep(0, nlambda)
      for (j in 1:nlambda){
