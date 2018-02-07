@@ -4,6 +4,7 @@ library(glmnet)
 library(picasso)
 library(gcdnet)
 library(spams)
+library(ncvreg)
 
 source("scripts.R")
 sourceCpp("utils.cpp")
