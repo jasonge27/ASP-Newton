@@ -204,7 +204,7 @@ test_lognet <- function(data, nlambda = 50, ratio=0.01, fista_it = 20, trialN = 
       KKTerr <- rep(0, trialN)
     
       for (i in 1:trialN){
-        t <- system.time(fitncvreg <- ncvreg(data$X, data$Y, family='binomial', 
+        t <- system.time(fit<- ncvreg(data$X, data$Y, family='binomial', 
               penalty='lasso',
               eps=1e-4,
               lambda=fitp$lambda))
