@@ -103,6 +103,10 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
   cat("\n")
 
 
+  if (!("ncvreg" %in% skip)){
+    cat("ncvreg timing:\n")
+  }
+
    if (!("glmnet" %in% skip)){
     cat("glmnet timing:\n")
     rtime <- rep(0, reg_breakpointN) 
@@ -168,7 +172,8 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
 
 }
 
-test_lognet <- function(data, nlambda = 100, ratio=0.01, fista_it = 20, trialN = 10, skip=c()){
+test_lognet <- function(data, nlambda = 50, ratio=0.01, fista_it = 20, trialN = 3, skip=c()){
+  p = dim(data$X)[2]
   cat("ASP-Newton timing:\n")
   picasso.rtime <- rep(0, trialN) 
   picasso.KKTerr <- rep(0, trialN)
@@ -191,6 +196,45 @@ test_lognet <- function(data, nlambda = 100, ratio=0.01, fista_it = 20, trialN =
   cat("standard deviation of KKT error: \n")
   print(sqrt(var(picasso.KKTerr)))
   
+  if (!("ncvreg" %in% skip)){
+    cat("ncverg timing:\n")
+    
+    tryCatch({
+      rtime <- rep(0, trialN) 
+      KKTerr <- rep(0, trialN)
+    
+      for (i in 1:trialN){
+        t <- system.time(fitncvreg <- ncvreg(df$X, df$Y, family='binomial', 
+              penalty='lasso',
+              eps=1e-4,
+              lambda=fitp$lambda))
+        rtime[i] <- t[1]
+        err <- rep(0, nlambda)
+        for (j in 1:nlambda){
+          err[j] <- lognet_KKT(data, fit$beta[2:(p+1),j], fit$beta[1,j], fit$lambda[j])
+        }
+        KKTerr[i] <- mean(err)
+      }
+
+      cat("mean running time: \n")
+      print(mean(rtime))
+
+      cat("standard deviation of running time: \n")
+      print(sqrt(var(rtime)))
+
+      cat("mean KKT error: \n")
+      print(mean(KKTerr))
+
+      cat("standard deviation of KKT error: \n")
+      print(sqrt(var(KKTerr))) 
+      },
+
+      error=function(e){
+        print("ncvreg runs into error")
+        print(e)}
+    )
+   
+  }
   
   if (!("glmnet" %in% skip)){
     cat("glmnet timing:\n")

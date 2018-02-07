@@ -36,10 +36,15 @@ farmdata$X <- scale(farmdata$X)
 if (TRUE){
 # Reproducing Table 1
 # Comparisons of Running Time Across Different Methods on Logistic Regression Tasks.
+cat("===========madelon==========\n")
 test_lognet(madelon)
+cat("===========gisette==========\n")
 test_lognet(gisette)
-test_lognet(farmdata)
+cat("===========farmdata==========\n")
+test_lognet(farmdata, skip=c('glmnet','gcdnet', 'fista'))
+cat("===========simwc==========\n")
 test_lognet(sim_wc)
+cat("==========simic===========\n")
 test_lognet(sim_ic)
 }
 
