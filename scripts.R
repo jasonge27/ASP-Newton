@@ -244,7 +244,7 @@ test_lognet <- function(data, nlambda = 30, ratio=0.005, fista_it = 20, trialN =
     for (i in 1:trialN){
       t <- system.time(fit<-glmnet(data$X, data$Y, family="binomial", 
                                    lambda = fitp$lambda,
-                                   standardize=FALSE, thresh=2*1e-4))
+                                   standardize=FALSE, thresh=5*1e-5))
       rtime[i] <- t[1]
       err <- rep(0, nlambda)
       for (j in 1:nlambda){
