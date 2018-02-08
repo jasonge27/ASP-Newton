@@ -38,15 +38,22 @@ if (TRUE){
 # Reproducing Table 1
 # Comparisons of Running Time Across Different Methods on Logistic Regression Tasks.
 cat("===========madelon==========\n")
-test_lognet(madelon)
+prec = list(picasso=4.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+test_lognet(madelon, prec)
+
 cat("===========gisette==========\n")
-test_lognet(gisette)
+prec = list(picasso=4.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+test_lognet(gisette, prec)
+j
 cat("===========farmdata==========\n")
-test_lognet(farmdata, skip=c('gcdnet', 'fista'))
+prec = list(picasso=2.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+test_lognet(farmdata, prec, skip=c('gcdnet', 'fista'))
 cat("===========simwc==========\n")
-test_lognet(sim_wc)
+prec = list(picasso=2.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+test_lognet(sim_wc, prec)
 cat("==========simic===========\n")
-test_lognet(sim_ic)
+prec = list(picasso=2.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+test_lognet(sim_ic, prec)
 }
 
 # Reproducing Figure 4
