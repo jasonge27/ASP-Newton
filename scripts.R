@@ -179,7 +179,7 @@ test_lognet <- function(data, nlambda = 30, ratio=0.005, fista_it = 20, trialN =
   picasso.KKTerr <- rep(0, trialN)
   for (i in 1:trialN){
      t <- system.time(fitp<-picasso(data$X, data$Y,family="binomial", lambda.min.ratio=ratio,
-                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-6, nlambda=nlambda))
+                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-7, nlambda=nlambda))
      picasso.rtime[i] <- t[1]
      err <- rep(0, nlambda)
      for (j in 1:nlambda){
@@ -206,7 +206,7 @@ test_lognet <- function(data, nlambda = 30, ratio=0.005, fista_it = 20, trialN =
       for (i in 1:trialN){
         t <- system.time(fit<- ncvreg(data$X, data$Y, family='binomial', 
               penalty='lasso',
-              eps=1e-3,
+              eps=1e-2,
               lambda=fitp$lambda))
         rtime[i] <- t[1]
         err <- rep(0, nlambda)
@@ -244,7 +244,7 @@ test_lognet <- function(data, nlambda = 30, ratio=0.005, fista_it = 20, trialN =
     for (i in 1:trialN){
       t <- system.time(fit<-glmnet(data$X, data$Y, family="binomial", 
                                    lambda = fitp$lambda,
-                                   standardize=FALSE, thresh=2*1e-5))
+                                   standardize=FALSE, thresh=2*1e-4))
       rtime[i] <- t[1]
       err <- rep(0, nlambda)
       for (j in 1:nlambda){
