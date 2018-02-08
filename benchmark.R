@@ -10,13 +10,13 @@ source("scripts.R")
 sourceCpp("utils.cpp")
 
 set.seed(111)
-if (FALSE){
+if (TRUE){
 sim_ic <- generate_sim_lognet(n=1000, d=5000, 0.8)
 
 sim_wc <- generate_sim_lognet(n=5000, d=1000, 0.2) 
 }
 
-if (FALSE){
+if (TRUE){
 load("datasets/madelon/madelon.RData")
 madelon$X[which(is.na(madelon$X))] <- 0 # missing values
 madelon$X <- madelon$X[ ,find_nonconstant_column(madelon$X)]
@@ -29,7 +29,7 @@ gisette$X <- scale(gisette$X)
 
 }
 
-if (TRUE){
+if (FALSE){
 load("datasets/farmads/farmads.RData")
 farmdata$Y <- (farmdata$Y == -1)
 farmdata$X <- as.matrix(farmdata$X)
@@ -42,21 +42,22 @@ if (TRUE){
 # Comparisons of Running Time Across Different Methods on Logistic Regression Tasks.
 cat("===========madelon==========\n")
 prec = list(picasso=5.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
-#test_lognet(madelon, prec)
+test_lognet(madelon, prec)
 
 cat("===========gisette==========\n")
 prec = list(picasso=1.0*1e-4, ncvreg=1e-2, glmnet=5*1e-5 )
-#test_lognet(gisette, prec)
+test_lognet(gisette, prec)
 
-cat("===========farmdata==========\n")
-prec = list(picasso=1.0*1e-4, ncvreg=1e-2, glmnet=1*1e-5 )
-test_lognet(farmdata, prec, skip=c('ncvreg', 'gcdnet', 'fista'))
+#cat("===========farmdata==========\n")
+#prec = list(picasso=1.0*1e-4, ncvreg=1e-2, glmnet=1*1e-5 )
+#test_lognet(farmdata, prec, skip=c('ncvreg', 'gcdnet', 'fista'))
 cat("===========simwc==========\n")
 prec = list(picasso=5*1e-2, ncvreg=1e-2, glmnet=5*1e-5 )
-#test_lognet(sim_wc, prec)
+test_lognet(sim_wc, prec)
+
 cat("==========simic===========\n")
 prec = list(picasso=1*1e-5, ncvreg=1e-3, glmnet=6*1e-5 )
-#test_lognet(sim_ic, prec)
+test_lognet(sim_ic, prec)
 }
 
 # Reproducing Figure 4
