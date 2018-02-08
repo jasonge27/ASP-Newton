@@ -48,13 +48,13 @@ prec = list(picasso=1.0*1e-4, ncvreg=1e-2, glmnet=5*1e-5 )
 #test_lognet(gisette, prec)
 
 cat("===========farmdata==========\n")
-prec = list(picasso=2.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+prec = list(picasso=2.0*1e-4, ncvreg=4*1e-3, glmnet=1*1e-5 )
 #test_lognet(farmdata, prec, skip=c('gcdnet', 'fista'))
 cat("===========simwc==========\n")
-prec = list(picasso=20*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+prec = list(picasso=5*1e-5, ncvreg=1e-2, glmnet=5*1e-5 )
 test_lognet(sim_wc, prec)
 cat("==========simic===========\n")
-prec = list(picasso=20.0*1e-6, ncvreg=1e-3, glmnet=6*1e-5 )
+prec = list(picasso=5*1e-5, ncvreg=1e-3, glmnet=6*1e-5 )
 test_lognet(sim_ic, prec)
 }
 
