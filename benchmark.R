@@ -10,10 +10,11 @@ source("scripts.R")
 sourceCpp("utils.cpp")
 
 set.seed(111)
+if (FALSE){
 sim_ic <- generate_sim_lognet(n=1000, d=5000, 0.8)
 
 sim_wc <- generate_sim_lognet(n=5000, d=1000, 0.2) 
-
+}
 
 if (FALSE){
 load("datasets/madelon/madelon.RData")
@@ -28,7 +29,7 @@ gisette$X <- scale(gisette$X)
 
 }
 
-if (FALSE){
+if (TRUE){
 load("datasets/farmads/farmads.RData")
 farmdata$Y <- (farmdata$Y == -1)
 farmdata$X <- as.matrix(farmdata$X)
@@ -49,13 +50,13 @@ prec = list(picasso=1.0*1e-4, ncvreg=1e-2, glmnet=5*1e-5 )
 
 cat("===========farmdata==========\n")
 prec = list(picasso=2.0*1e-4, ncvreg=4*1e-3, glmnet=1*1e-5 )
-#test_lognet(farmdata, prec, skip=c('gcdnet', 'fista'))
+test_lognet(farmdata, prec, skip=c('ncvreg', 'gcdnet', 'fista'))
 cat("===========simwc==========\n")
 prec = list(picasso=5*1e-2, ncvreg=1e-2, glmnet=5*1e-5 )
-test_lognet(sim_wc, prec)
+#test_lognet(sim_wc, prec)
 cat("==========simic===========\n")
 prec = list(picasso=1*1e-5, ncvreg=1e-3, glmnet=6*1e-5 )
-test_lognet(sim_ic, prec)
+#test_lognet(sim_ic, prec)
 }
 
 # Reproducing Figure 4
