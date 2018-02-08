@@ -42,7 +42,7 @@ prec = list(picasso=4.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
 test_lognet(madelon, prec)
 
 cat("===========gisette==========\n")
-prec = list(picasso=5*1e-4, ncvreg=1e-2, glmnet=5*1e-5 )
+prec = list(picasso=1.0*1e-4, ncvreg=1e-2, glmnet=5*1e-5 )
 test_lognet(gisette, prec)
 
 cat("===========farmdata==========\n")
