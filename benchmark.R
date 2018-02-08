@@ -54,7 +54,7 @@ cat("===========simwc==========\n")
 prec = list(picasso=5*1e-2, ncvreg=1e-2, glmnet=5*1e-5 )
 test_lognet(sim_wc, prec)
 cat("==========simic===========\n")
-prec = list(picasso=5*1e-5, ncvreg=1e-3, glmnet=6*1e-5 )
+prec = list(picasso=1*1e-5, ncvreg=1e-3, glmnet=6*1e-5 )
 test_lognet(sim_ic, prec)
 }
 
