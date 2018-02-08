@@ -172,16 +172,17 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
 
 }
 
-test_lognet <- function(data, nlambda = 50, ratio=0.01, fista_it = 20, trialN = 3, skip=c()){
+test_lognet <- function(data, nlambda = 30, ratio=0.005, fista_it = 20, trialN = 3, skip=c()){
   p = dim(data$X)[2]
   cat("ASP-Newton timing:\n")
   picasso.rtime <- rep(0, trialN) 
   picasso.KKTerr <- rep(0, trialN)
   for (i in 1:trialN){
      t <- system.time(fitp<-picasso(data$X, data$Y,family="binomial", lambda.min.ratio=ratio,
-                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-4, nlambda=nlambda))
+                                    standardize=FALSE, verbose=FALSE, prec=2.0*1e-6, nlambda=nlambda))
      picasso.rtime[i] <- t[1]
      err <- rep(0, nlambda)
+     print(fitp$intercept)
      for (j in 1:nlambda){
        err[j] <- lognet_KKT(data, fitp$beta[,j], fitp$intercept[j], fitp$lambda[j])
      }
