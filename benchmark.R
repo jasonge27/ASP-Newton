@@ -38,7 +38,7 @@ if (TRUE){
 # Reproducing Table 1
 # Comparisons of Running Time Across Different Methods on Logistic Regression Tasks.
 cat("===========madelon==========\n")
-prec = list(picasso=4.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
+prec = list(picasso=5.0*1e-6, ncvreg=1e-2, glmnet=5*1e-5 )
 test_lognet(madelon, prec)
 
 cat("===========gisette==========\n")
