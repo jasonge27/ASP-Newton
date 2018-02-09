@@ -15,11 +15,6 @@ sourceCpp("utils.cpp")
 
 if (TRUE){
 load("datasets/farmads/farmads.RData")
-farmdata$Y <- (farmdata$Y == -1)
-farmdata$X <- as.matrix(farmdata$X)
-farmdata$X <- farmdata$X[ ,find_nonconstant_column(farmdata$X)]
-farmdata$X <- scale(farmdata$X)
-save(farmdata, file="datasets/farmads/farmads.RData")
 }
 
 
