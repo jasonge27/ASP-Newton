@@ -269,7 +269,7 @@ test_lognet <- function(data, prec, nlambda =100, ratio=0.01, fista_it = 20, tri
     for (i in 1:trialN){
       t <- system.time(fit<-gcdnet(data$X, data$Y, method="logit", 
                                    lambda = fitp$lambda,
-                                   standardize=FALSE, eps=2*1e-6))
+                                   standardize=FALSE, eps=prec$gcdnet))
       rtime[i] <- t[1]
       err <- rep(0, nlambda)
       for (j in 1:nlambda){
