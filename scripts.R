@@ -172,7 +172,7 @@ timing_lognet <- function(data, nlambda = 100, ratio = 0.01, fista_it = 20, tria
 
 }
 
-test_lognet <- function(data, prec, nlambda =100, ratio=0.01, fista_it = 20, trialN = 1, skip=c()){
+test_lognet <- function(data, prec, nlambda =100, ratio=0.01, fista_it = 20, trialN = 10, skip=c()){
   p = dim(data$X)[2]
   cat("ASP-Newton timing:\n")
   picasso.rtime <- rep(0, trialN) 
